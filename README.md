@@ -1,5 +1,14 @@
 # jpa-study 100
+### 알아두기_강의와의 차이점.
+    강의의 경우, Controller 패키지를 최초 빌드하는 동안에
+    Service 명에 따라 생성하고 있다. 
+    하지만 실무적인 관점에서 Controller와 같은 명칭으로 나누어 만들었고
+    나의 경우는 컨트롤러를 가장 밑에 패키지로 분류해 관리하고자 'web'이라는 이름으로 관리
+    마찬가지로, config 패키지로 설정 파일 역시 관리 중
+
 #### 0000 SpringSecurity 모든 곳에 허용하기 위한 설정    
+    package com.example.jpastudy.config;    
+
     @Configuration
     @EnableWebSecurity
     public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -10,6 +19,8 @@
         }
     }
 #### 0001~0002 Controller 활용한 매핑
+    package com.example.jpastudy.web;
+
     import org.springframework.stereotype.Controller;
     import org.springframework.web.bind.annotation.RequestMapping;
     import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,6 +42,8 @@
         }
     }
 #### 0003~0005 RestController 활용한 매핑
+    package com.example.jpastudy.web;
+
     import org.springframework.web.bind.annotation.GetMapping;
     import org.springframework.web.bind.annotation.RequestMapping;
     import org.springframework.web.bind.annotation.RequestMethod;
@@ -55,5 +68,17 @@
         return "Hello Rest API";
         }
     }
-
+#### 0006
+    package com.example.jpastudy.web;
+    
+    import org.springframework.web.bind.annotation.GetMapping;
+    import org.springframework.web.bind.annotation.RestController;
+    
+        @RestController
+        public class ApiNoticeController {
+        @GetMapping("/api/notice")
+        public String noticeString(){
+        return "공지사항입니다.";
+        }
+    }
 
