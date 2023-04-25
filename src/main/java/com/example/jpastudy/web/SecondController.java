@@ -18,5 +18,9 @@ public class SecondController {
     public String helloRest(){
         return "Hello Rest";
     }
-
+    //ex_05
+    @GetMapping("/api/helloworld")
+    public String apiHelloWorld(){
+        return "Hello Rest API";
+    }
 }
