@@ -30,7 +30,7 @@
             return "Hello World";
         }
     }
-#### 0003~0004 RestController 활용한 매핑
+#### 0003~0005 RestController 활용한 매핑
     import org.springframework.web.bind.annotation.GetMapping;
     import org.springframework.web.bind.annotation.RequestMapping;
     import org.springframework.web.bind.annotation.RequestMethod;
