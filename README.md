@@ -236,6 +236,17 @@ public class NoticeService {
        //return null;
         return new ArrayList<>();
     }
+    //ex_10
+    /**
+     * 게시글 개수에 대한 반환
+     * 실제에서는 query 활용한 수를 조회하는 방식으로 진행함 그 때도 Query 카운트를 활용!
+     * String 을 반환하나, int 반환하나 실질적인 http 에서는 String 해당하는 값.
+     * 다만, 코드의 가독성과 직관적인 코드를 위해 이를 구분해 주는 것이 좋다
+     */
+    @GetMapping(value = "/api/count")
+    public int noticeCount() {
+        return 10;
+    }
 
 ```
     

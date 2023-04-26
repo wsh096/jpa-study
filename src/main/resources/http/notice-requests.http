@@ -19,3 +19,6 @@ GET http://localhost:8080/api/notice3
 
 ### Null 생성
 GET http://localhost:8080/api/notice4
+
+### 게시글 개수 세기
+GET http://localhost:8080/api/count
