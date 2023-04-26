@@ -8,6 +8,7 @@
 
 #### 0000 SpringSecurity 모든 곳에 허용하기 위한 설정    
 ___
+```agsl
     package com.example.jpastudy.config;    
 
     @Configuration
@@ -19,8 +20,10 @@ ___
             http.authorizeRequests().anyRequest().permitAll();
         }
     }
+```
 #### 0001~0002 Controller 활용한 매핑
 ___
+```agsl
     package com.example.jpastudy.web;
 
     import org.springframework.stereotype.Controller;
@@ -43,14 +46,16 @@ ___
             return "Hello World";
         }
     }
+```
 #### 0003~0005 RestController 활용한 매핑
 ___
-    package com.example.jpastudy.web;
+```agsl
+package com.example.jpastudy.web;
 
-    import org.springframework.web.bind.annotation.GetMapping;
-    import org.springframework.web.bind.annotation.RequestMapping;
-    import org.springframework.web.bind.annotation.RequestMethod;
-    import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
     
     @RestController
     public class SecondController {
@@ -71,41 +76,51 @@ ___
         return "Hello Rest API";
         }
     }
+```    
 #### 0006-
-    package com.example.jpastudy.web;
+```agsl
+package com.example.jpastudy.web;
     
-    import org.springframework.web.bind.annotation.GetMapping;
-    import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
     
-        //ex_06
-        @RestController
-        public class ApiNoticeController {
-        @GetMapping("/api/notice")
-        public String noticeString(){
-        return "공지사항입니다.";
-        }
-
-        //ex_07
-        /**
-         * String 으로 받을 시 , text 를 기본으로 하고 다른 객체로 받을 시 application/json 이 기본값
-         *  @GetMapping(value = "/api/notice2",produces = "application/json;charset=UTF-8")
-         *  위와 같이 명시적으로 String json 타입으로 바꿔 줄 수 있지만, 이렇게 해도 String 자체의 형태를
-         *  보여주기 때문에 Json 형태로 만들어지는 것은 아님.
-         */
-        @GetMapping(value = "/api/notice2")
-        public Notice noticeString2() {
-            return noticeService.notice();
+    //ex_06
+    @RestController
+    public class ApiNoticeController {
+    @GetMapping("/api/notice")
+    public String noticeString(){
+    return "공지사항입니다.";
+    }
+    //ex_07
+    /**
+    * String 으로 받을 시 , text 를 기본으로 하고 다른 객체로 받을 시 application/json 이 기본값
+    *  @GetMapping(value = "/api/notice2",produces = "application/json;charset=UTF-8")
+    *  위와 같이 명시적으로 String json 타입으로 바꿔 줄 수 있지만, 이렇게 해도 String 자체의 형태를
+    *  보여주기 때문에 Json 형태로 만들어지는 것은 아님.
+    */
+    @GetMapping(value = "/api/notice2")
+    public Notice noticeString2() {
+    return noticeService.notice();
         }
     }   
-        //ex_08
-    
-        /**
-         * 게시판의 추상화한 모델, 복수형태 데이터 리턴. 2개 이상의 데이터 가져오기
-         */
-        @GetMapping(value = "/api/notice3")
-        public List<Notice> noticeList() {
-            return noticeService.noticeList();
-        }
+    //ex_08
+        
+    /**
+    * 게시판의 추상화한 모델, 복수형태 데이터 리턴. 2개 이상의 데이터 가져오기
+    */
+    @GetMapping(value = "/api/notice3")
+    public List<Notice> noticeList() {
+        return noticeService.noticeList();
+    }
+    //ex_09
+    /**
+     * Null 반환 정확히는 빈배열의 반환 서비스 단에 관련한 차이 자세한 설명 있음.
+     */
+    @GetMapping(value = "/api/notice4")
+    public List<Notice> noticeList_Null() {
+        return noticeService.noticeListNull();
+    }
+```
 #### ex07- 을 위한 모델 클래스(Component)와 Service Class
 ___
 ```agsl
@@ -189,6 +204,38 @@ public class NoticeService {
     return noticeList;
     }
 }
+  /**
+     * 강의와 다른점 강의는 전부 선언하고 변수를 반환 나는 바로 반환.
+     * 즉 강의 List<Notice> notice = new ArrayList<>();
+     *          return notice;
+     * 나 return new ArrayList<>(); 해당 형태를 활용한다.
+     *
+     * 실수로 부터 배우기!
+     * 잘못된 표현
+     * return List<Notice> notice; //해당 형태는 인터페이스 추상 메서드여서 객체화 인스턴스를 생성할 수 없음.
+     *
+     * Null Vs. List<>().isEmpty() == true
+     *  return null;
+     *  아래처럼 반환
+     *Keep-Alive: timeout=60
+     * Connection: keep-alive
+     *
+     * <Response body is empty> <- 응답 자체가 비었다고 나오는 것! 차이!!
+     *
+     *  return new ArrayList<>();
+     *  아래처럼 반환
+     *  Keep-Alive: timeout=60
+     * Connection: keep-alive
+     *
+     * []<- 목표한 값(빈 리스트 반환)
+     * 
+     * `작성 목적`
+     * 데이터가 Null 인 경우 방어 코드를 작성해서 해결
+     */
+    public List<Notice> noticeListNull(){
+       //return null;
+        return new ArrayList<>();
+    }
 
 ```
     

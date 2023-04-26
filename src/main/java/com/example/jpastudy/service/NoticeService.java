@@ -55,4 +55,36 @@ public class NoticeService {
         noticeList.add(notice2);
     return noticeList;
     }
+    /**
+     * 강의와 다른점 강의는 전부 선언하고 변수를 반환 나는 바로 반환.
+     * 즉 강의 List<Notice> notice = new ArrayList<>();
+     *          return notice;
+     * 나 return new ArrayList<>(); 해당 형태를 활용한다.
+     *
+     * 실수로 부터 배우기!
+     * 잘못된 표현
+     * return List<Notice> notice; //해당 형태는 인터페이스 추상 메서드여서 객체화 인스턴스를 생성할 수 없음.
+     *
+     * Null Vs. List<>().isEmpty() == true
+     *  return null;
+     *  아래처럼 반환
+     *Keep-Alive: timeout=60
+     * Connection: keep-alive
+     *
+     * <Response body is empty> <- 응답 자체가 비었다고 나오는 것! 차이!!
+     *
+     *  return new ArrayList<>();
+     *  아래처럼 반환
+     *  Keep-Alive: timeout=60
+     * Connection: keep-alive
+     *
+     * []<- 목표한 값(빈 리스트 반환)
+     *
+     * `작성 목적`
+     * 데이터가 Null 인 경우 방어 코드를 작성해서 해결
+     */
+    public List<Notice> noticeListNull(){
+       //return null;
+        return new ArrayList<>();
+    }
 }

@@ -1,12 +1,12 @@
 ###
 /main.do
 
-###
+### 문자열 반환
 GET http://localhost:8080/api/notice
 
 <> 2023-04-25T101849.200.txt
 
-###
+### 값 반환
 GET http://localhost:8080/api/notice2
 Content-Type: application/json; charset=UTF-8
 
@@ -14,5 +14,8 @@ Content-Type: application/json; charset=UTF-8
 <> 2023-04-25T105049.200.txt
 <> 2023-04-25T104949.200.txt
 
-###
+### 리스트 반환(빌더의 활용)
 GET http://localhost:8080/api/notice3
+
+### Null 생성
+GET http://localhost:8080/api/notice4

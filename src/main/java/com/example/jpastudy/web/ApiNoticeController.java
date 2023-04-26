@@ -20,7 +20,6 @@ public class ApiNoticeController {
     }
 
     //ex_07
-
     /**
      * 관련 내용 이슈 정리. 아래 링크 참고. https://github.com/wsh096/jpa-study/issues/3
      */
@@ -30,12 +29,20 @@ public class ApiNoticeController {
     }
 
     //ex_08
-
     /**
      * 게시판의 추상화한 모델, 복수형태 데이터 리턴. 2개 이상의 데이터 가져오기
      */
     @GetMapping(value = "/api/notice3")
     public List<Notice> noticeList() {
         return noticeService.noticeList();
+    }
+
+    //ex_09
+    /**
+     * Null 반환 정확히는 빈배열의 반환 서비스 단에 관련한 차이 자세한 설명 있음.
+     */
+    @GetMapping(value = "/api/notice4")
+    public List<Notice> noticeList_Null() {
+        return noticeService.noticeListNull();
     }
 }
