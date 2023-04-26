@@ -13,3 +13,6 @@ Content-Type: application/json; charset=UTF-8
 <> 2023-04-25T105820.200.txt
 <> 2023-04-25T105049.200.txt
 <> 2023-04-25T104949.200.txt
+
+###
+GET http://localhost:8080/api/notice3

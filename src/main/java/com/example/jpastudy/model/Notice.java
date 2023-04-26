@@ -1,7 +1,10 @@
 package com.example.jpastudy.model;
 
 import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.stereotype.Component;
@@ -14,6 +17,9 @@ import org.springframework.stereotype.Component;
  */
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @ToString //해당 어노테이션이 있어야, 주소값이 아니라 문자열 값으로 반환
 @Component // 해당 클래스의 빈 주입
 //@Entity db 연결한 것이 아니기 때문에 해당 어노테이션은 시기상조,
