@@ -5,6 +5,8 @@ import com.example.jpastudy.service.NoticeService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -55,5 +57,16 @@ public class ApiNoticeController {
     @GetMapping(value = "/api/count")
     public int noticeCount() {
         return 10;
+    }
+
+    //ex_11
+    /**
+     * GetMapping _ PostMapping
+     * Restful 은, URI 들어가는 방식에 따라 구분되기 때문에 주소가 같더라도 방식이 다르면 다른 값.
+     * @RequestParam 을 통해 넣어줄 값에 관한 구체적선언 가능.
+     */
+    @PostMapping(value = "/api/notice")
+    public Notice addNotice(@RequestParam String title, @RequestParam String description) {
+        return noticeService.addNotice(title, description);
     }
 }

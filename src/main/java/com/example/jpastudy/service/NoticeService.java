@@ -84,7 +84,15 @@ public class NoticeService {
      * 데이터가 Null 인 경우 방어 코드를 작성해서 해결
      */
     public List<Notice> noticeListNull(){
-       //return null;
-        return new ArrayList<>();
+       return null;
+       // return new ArrayList<>();
+    }
+    //ex_11
+    public Notice addNotice(String title, String description) {
+        return notice.builder()
+            .id(1L)
+            .title(title)
+            .description(description)
+            .regDate(LocalDateTime.of(2023, 4, 26, 0, 0)).build();
     }
 }

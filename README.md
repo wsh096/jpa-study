@@ -121,7 +121,7 @@ import org.springframework.web.bind.annotation.RestController;
         return noticeService.noticeListNull();
     }
 ```
-#### ex07- 을 위한 모델 클래스(Component)와 Service Class
+#### ex07-ex10 을 위한 모델 클래스(Component)와 Service Class
 ___
 ```agsl
 //모델 클래스(Component)
@@ -247,6 +247,51 @@ public class NoticeService {
     public int noticeCount() {
         return 10;
     }
-
 ```
-    
+#### ex11- 을 위한 Controller (post) Service 추가, Config 추가.    
+---
+
+`Config 설정`
+```agsl
+package com.example.jpastudy.config;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    //Security 를 모든 곳에서 허용하기 위한 설정.
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable();
+        http.headers().frameOptions().sameOrigin(); // ex11을 위한 추가 설정 외부의 값을 받아오기 위한 설정
+        http.authorizeRequests().anyRequest().permitAll();
+    }
+}
+```
+`Controller`
+```agsl
+//ex_11
+    /**
+     * GetMapping _ PostMapping
+     * Restful 은, URI 들어가는 방식에 따라 구분되기 때문에 주소가 같더라도 방식이 다르면 다른 값.
+     * @RequestParam 을 통해 넣어줄 값에 관한 구체적선언 가능.
+     */
+    @PostMapping(value = "/api/notice")
+    public Notice addNotice(@RequestParam String title, @RequestParam String description) {
+        return noticeService.addNotice(title, description);
+    }
+```
+`Service`
+```agsl
+//ex_11
+    public Notice addNotice(String title, String description) {
+        return notice.builder()
+            .id(1L)
+            .title(title)
+            .description(description)
+            .regDate(LocalDateTime.of(2023, 4, 26, 0, 0)).build();
+    }
+```
