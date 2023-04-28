@@ -295,6 +295,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public Notice addNoticeAbstract(Notice notice){
         return noticeService.addNoticeAbstract(notice);
     }
+    
+    /**
+     * ex_13
+     * @RequestBody로 형태로 스프링에서 받아서 매핑을 진행
+     * 이러한 형태로 매핑해줘야 Json 형태로 값을 받을 수 있음
+     */
+    @PostMapping(value = "/api/notice3")
+    public Notice addNoticeShowJson(@RequestBody Notice notice){
+        return noticeService.addNoticeShowJson(notice);
+    }
 ```
 `Service`
 ```agsl
@@ -313,6 +323,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         notice.setRegDate(LocalDateTime.of(2023,04,12,12,12));
     return notice;
     }
+//ex_13
+    public Notice addNoticeShowJson(Notice notice) {
+        notice.setId(3L);
+        notice.setRegDate(LocalDateTime.now());
+        return notice;
+    }
+    
 ```
 `스크래치 파일`
 ```agsl
@@ -327,4 +344,13 @@ POST http://localhost:8080/api/notice2
 Content-Type: application/x-www-form-urlencoded
 
 title=제목1&description=내용1
+
+### 게시글 입력 show json type ex_13
+POST http://localhost:8080/api/notice3
+Content-Type: application/json
+
+{
+"title" : "새로운 제목",
+"description" : "새로운 내용"
+}
 ```

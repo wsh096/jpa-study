@@ -6,6 +6,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -80,5 +81,15 @@ public class ApiNoticeController {
     @PostMapping(value = "/api/notice2")
     public Notice addNoticeAbstract(Notice notice){
         return noticeService.addNoticeAbstract(notice);
+    }
+
+    /**
+     * ex_13
+     * @RequestBody로 형태로 스프링에서 받아서 매핑을 진행
+     * 이러한 형태로 매핑해줘야 Json 형태로 값을 받을 수 있음
+     */
+    @PostMapping(value = "/api/notice3")
+    public Notice addNoticeShowJson(@RequestBody Notice notice){
+        return noticeService.addNoticeShowJson(notice);
     }
 }
