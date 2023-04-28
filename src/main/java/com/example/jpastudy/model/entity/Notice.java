@@ -1,6 +1,7 @@
 package com.example.jpastudy.model.entity;
 
 import java.time.LocalDateTime;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,4 +29,10 @@ public class Notice {
     private String title;
     private String description;
     private LocalDateTime regDate;
+
+    private long watch;
+    //like 는 H2의 예약어기 때문에 생성이 안됨!
+
+    private long likes;
+
 }

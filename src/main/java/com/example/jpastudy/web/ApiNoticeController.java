@@ -101,4 +101,12 @@ public class ApiNoticeController {
     public Notice addNoticeShowDB(@RequestBody NoticeInput noticeInput){
         return noticeService.addNoticeShowDB(noticeInput);
     }
+    /**
+     * ex_15
+     * 공지사항 등록일은 현재시간을 저장, 공지사항 조회수와 좋아요 수는 초기값을 0으로 설정하기.
+     */
+    @PostMapping(value = "/api/notice5")
+    public Notice addWatchLike(@RequestBody NoticeInput noticeInput){
+        return noticeService.addWatchLike(noticeInput);
+    }
 }

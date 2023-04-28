@@ -53,3 +53,12 @@ Content-Type: application/json
   "title" : "더 새로운 제목",
   "description" : "더 새로운 내용"
 }
+
+### 조회수 좋아요 0부터 시작 ex_15
+POST http://localhost:8080/api/notice5
+Content-Type: application/json
+
+{
+  "title" : "더 새로운 제목",
+  "description" : "더 새로운 내용"
+}

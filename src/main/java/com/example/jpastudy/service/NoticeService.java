@@ -102,17 +102,26 @@ public class NoticeService {
 
         return noticeInput;
     }
+
     //ex_14
     public Notice addNoticeShowDB(NoticeInput noticeInput) {
         return getSaveNotice(noticeInput);
     }
 
     private Notice getSaveNotice(NoticeInput noticeInput) {
-        Notice notice =
-        Notice.builder().title(noticeInput.getTitle())
+        return noticeRepository.save( Notice.builder().title(noticeInput.getTitle())
             .description(noticeInput.getDescription())
-            .regDate(LocalDateTime.now()).build();
-        noticeRepository.save(notice);
-        return notice;
+            .regDate(LocalDateTime.now()).build());
+
+    }
+    //ex_15
+    public Notice addWatchLike(NoticeInput noticeInput) {
+        return getSaveNoticeWatchLike(noticeInput);
+    }
+
+    private Notice getSaveNoticeWatchLike(NoticeInput noticeInput) {
+        return noticeRepository.save(Notice.builder().title(noticeInput.getTitle())
+            .description(noticeInput.getDescription()).watch(0L).likes(0L)
+            .regDate(LocalDateTime.now()).build());
     }
 }

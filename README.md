@@ -394,6 +394,9 @@ public class Notice {
     private String title;
     private String description;
     private LocalDateTime regDate;
+    private long watch;
+    //like 는 H2의 예약어기 때문에 생성이 안됨!
+    private long likes;//자세한 내용은 issue
 }
 
 ```
@@ -413,13 +416,22 @@ public interface NoticeRepository extends JpaRepository<Notice,Long> {
 ```
 `Controller`
 ```agsl
-/**
+    /**
      * ex_14
      * 실제 db에서 확인인 가능한 형태로 제작
      */
     @PostMapping(value = "/api/notice4")
     public Notice addNoticeShowDB(@RequestBody NoticeInput noticeInput){
         return noticeService.addNoticeShowDB(noticeInput);
+    }
+    /**
+     * ex_15
+     * 공지사항 등록일은 현재시간을 저장, 공지사항 조회수와 좋아요 수는 초기값을 0으로 설정하기.
+     * 엔티티에 예약어를 쓰지 말자!(https://github.com/wsh096/jpa-study/issues/8)
+     */
+    @PostMapping(value = "/api/notice5")
+    public Notice addWatchLike(@RequestBody NoticeInput noticeInput){
+        return noticeService.addWatchLike(noticeInput);
     }
 ```
 `Service`
@@ -436,5 +448,15 @@ public interface NoticeRepository extends JpaRepository<Notice,Long> {
             .regDate(LocalDateTime.now()).build();
         noticeRepository.save(notice);
         return notice;
+    }
+//ex_15
+    public Notice addWatchLike(NoticeInput noticeInput) {
+        return getSaveNoticeWatchLike(noticeInput);
+    }
+
+    private Notice getSaveNoticeWatchLike(NoticeInput noticeInput) {
+        return noticeRepository.save(Notice.builder().title(noticeInput.getTitle())
+            .description(noticeInput.getDescription()).watch(0L).likes(0L)
+            .regDate(LocalDateTime.now()).build());
     }
 ```
