@@ -300,6 +300,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * ex_13
      * @RequestBody로 형태로 스프링에서 받아서 매핑을 진행
      * 이러한 형태로 매핑해줘야 Json 형태로 값을 받을 수 있음
+     * 관련정리(https://github.com/wsh096/jpa-study/issues/6)
      */
     @PostMapping(value = "/api/notice3")
     public Notice addNoticeShowJson(@RequestBody Notice notice){
