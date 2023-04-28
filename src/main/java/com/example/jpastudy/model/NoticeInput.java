@@ -23,12 +23,11 @@ import org.springframework.stereotype.Component;
 @ToString //해당 어노테이션이 있어야, 주소값이 아니라 문자열 값으로 반환
 @Component // 해당 클래스의 빈 주입
 //@Entity db 연결한 것이 아니기 때문에 해당 어노테이션은 시기상조,
-public class Notice {
+public class NoticeInput {
 
     //@Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+
     private String title;
     private String description;
-    private LocalDateTime regDate;
 }

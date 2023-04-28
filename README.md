@@ -94,11 +94,11 @@ import org.springframework.web.bind.annotation.RestController;
     //ex_07
     /**
     * String 으로 받을 시 , text 를 기본으로 하고 다른 객체로 받을 시 application/json 이 기본값
-    *  @GetMapping(value = "/api/notice2",produces = "application/json;charset=UTF-8")
+    *  @GetMapping(value = "/api/noticeInput2",produces = "application/json;charset=UTF-8")
     *  위와 같이 명시적으로 String json 타입으로 바꿔 줄 수 있지만, 이렇게 해도 String 자체의 형태를
     *  보여주기 때문에 Json 형태로 만들어지는 것은 아님.
     */
-    @GetMapping(value = "/api/notice2")
+    @GetMapping(value = "/api/noticeInput2")
     public Notice noticeString2() {
     return noticeService.notice();
         }
@@ -109,8 +109,8 @@ import org.springframework.web.bind.annotation.RestController;
     * 게시판의 추상화한 모델, 복수형태 데이터 리턴. 2개 이상의 데이터 가져오기
     */
     @GetMapping(value = "/api/notice3")
-    public List<Notice> noticeList() {
-        return noticeService.noticeList();
+    public List<Notice> noticeInputList() {
+        return noticeService.noticeInputList();
     }
     //ex_09
     /**
@@ -148,7 +148,7 @@ public class Notice {
 //Service Class
 package com.example.jpastudy.service;
 
-import com.example.jpastudy.model.Notice;
+import com.example.jpastudy.model.NoticeInput;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -179,29 +179,29 @@ public class NoticeService {
     /**
      * ex_08 의 값을 만들기 위한 서비스입니다.
      */
-    public List<Notice> noticeList(){
-        List<Notice> noticeList = new ArrayList<>();
-        Notice notice1 = new Notice();
-        notice1.setId(1L);
-        notice1.setTitle("공지사항입니다.");
-        notice1.setDescription("공지사항내용입니다.");
-        notice1.setRegDate(LocalDateTime.of(2023,4,26,0,0));
-        noticeList.add(notice1);
+    public List<Notice> noticeInputList(){
+        List<Notice> noticeInputList = new ArrayList<>();
+        Notice noticeInput1 = new Notice();
+        noticeInput1.setId(1L);
+        noticeInput1.setTitle("공지사항입니다.");
+        noticeInput1.setDescription("공지사항내용입니다.");
+        noticeInput1.setRegDate(LocalDateTime.of(2023,4,26,0,0));
+        noticeInputList.add(noticeInput1);
         /**
          * builder 의 활용
          * builder 의 경우, 생성자를 통해서 해당 값을 생성하는 것과 같다.
          * 그렇기 때문에 setId() 이런 형태로 값이 들어가는 게 아니라(내가 해당된 오류를 시도 했었다...ㅎ)
          * 바로 값을 넣어 주면 된다! 초기화를 한다는 생각으로 this.id = 2; 이런 느낌!
          */
-        Notice notice2 = Notice.builder()
+        Notice noticeInput2 = Notice.builder()
                         .id(2L)
                         .title("두 번째 공지사항입니다.")
                         .description("두 번째 공지사항내용입니다.")
                         .regDate(LocalDateTime.of(2023, 4, 26, 0, 0))
                         .build();
 
-        noticeList.add(notice2);
-    return noticeList;
+        noticeInputList.add(noticeInput2);
+    return noticeInputList;
     }
 }
   /**
@@ -248,7 +248,7 @@ public class NoticeService {
         return 10;
     }
 ```
-#### ex11- 을 위한 Controller (post) Service 추가, Config 추가. 스크래치 파일.   
+#### ex11- ex13 을 위한 Controller (post) Service 추가, Config 추가. 스크래치 파일.   
 ---
 
 `Config 설정`
@@ -291,7 +291,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * 12번의 경우 비어 있는 것을 post 로 전달해줘서 셋팅하는 연습
      * 큰 차이는 없음
      */
-    @PostMapping(value = "/api/notice2")
+    @PostMapping(value = "/api/noticeInput2")
     public Notice addNoticeAbstract(Notice notice){
         return noticeService.addNoticeAbstract(notice);
     }
@@ -341,7 +341,7 @@ Content-Type: application/x-www-form-urlencoded
 title=제목1&description=내용1
 
 ### 게시글 입력 추상 형태 ex_12
-POST http://localhost:8080/api/notice2
+POST http://localhost:8080/api/noticeInput2
 Content-Type: application/x-www-form-urlencoded
 
 title=제목1&description=내용1
@@ -354,4 +354,87 @@ Content-Type: application/json
 "title" : "새로운 제목",
 "description" : "새로운 내용"
 }
+```
+
+#### ex14- DB 연결, repository, .yml 설정(issue 확인)
+---
++ `@component` 어노테이션 private final 로 선언한 값의 빈을 주입해주는 역할을 수행하는 것으로 확인. 
++ 하지만 해당 어노테이션의 접근은 적절한 방식이 아니기에, form이나 entity의 불변성 접근 불가의 원칙에 따라 사용하지 않음.
++ ex14_관련한 yml 설정 등의 기본 내용 이슈에 정리(https://github.com/wsh096/jpa-study/issues/7)
+`Entity`
+
+```agsl
+package com.example.jpastudy.model.entity;
+
+import java.time.LocalDateTime;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+//import org.springframework.stereotype.Component;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Entity
+@Table(name = "notice")
+//@Component // 해당 어노테이션이 없으면 실행이 되지 않음 이유는 service에 불필요하게 final 선언해서 그랬던 것!
+public class Notice {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    private String title;
+    private String description;
+    private LocalDateTime regDate;
+}
+
+```
+`repository`
+```agsl
+package com.example.jpastudy.model.repository;
+
+import com.example.jpastudy.model.entity.Notice;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface NoticeRepository extends JpaRepository<Notice,Long> {
+
+}
+
+```
+`Controller`
+```agsl
+/**
+     * ex_14
+     * 실제 db에서 확인인 가능한 형태로 제작
+     */
+    @PostMapping(value = "/api/notice4")
+    public Notice addNoticeShowDB(@RequestBody NoticeInput noticeInput){
+        return noticeService.addNoticeShowDB(noticeInput);
+    }
+```
+`Service`
+```agsl
+ //ex_14
+    public Notice addNoticeShowDB(NoticeInput noticeInput) {
+        return getSaveNotice(noticeInput);
+    }
+
+    private Notice getSaveNotice(NoticeInput noticeInput) {
+        Notice notice =
+        Notice.builder().title(noticeInput.getTitle())
+            .description(noticeInput.getDescription())
+            .regDate(LocalDateTime.now()).build();
+        noticeRepository.save(notice);
+        return notice;
+    }
 ```

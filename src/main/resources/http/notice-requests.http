@@ -2,12 +2,12 @@
 /main.do
 
 ### 문자열 반환
-GET http://localhost:8080/api/notice
+GET http://localhost:8080/api/noticeInput
 
 <> 2023-04-25T101849.200.txt
 
 ### 값 반환
-GET http://localhost:8080/api/notice2
+GET http://localhost:8080/api/noticeInput2
 Content-Type: application/json; charset=UTF-8
 
 <> 2023-04-25T105820.200.txt
@@ -25,13 +25,13 @@ GET http://localhost:8080/api/count
 
 
 ### 게시글 제목과 내용 더하기 ex_11
-POST http://localhost:8080/api/notice/
+POST http://localhost:8080/api/noticeInput/
 Content-Type: application/x-www-form-urlencoded
 
 title=제목1&description=내용1
 
 ### 게시글 입력 추상 형태 ex_12
-POST http://localhost:8080/api/notice2
+POST http://localhost:8080/api/noticeInput2
 Content-Type: application/x-www-form-urlencoded
 
 title=제목1&description=내용1
@@ -43,4 +43,13 @@ Content-Type: application/json
 {
 "title" : "새로운 제목",
 "description" : "새로운 내용"
+}
+
+### 실제 db로 값 설정해 확인 ex_14
+POST http://localhost:8080/api/notice4
+Content-Type: application/json
+
+{
+  "title" : "더 새로운 제목",
+  "description" : "더 새로운 내용"
 }

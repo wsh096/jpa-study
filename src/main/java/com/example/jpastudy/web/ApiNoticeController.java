@@ -1,6 +1,7 @@
 package com.example.jpastudy.web;
 
-import com.example.jpastudy.model.Notice;
+import com.example.jpastudy.model.NoticeInput;
+import com.example.jpastudy.model.entity.Notice;
 import com.example.jpastudy.service.NoticeService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +28,7 @@ public class ApiNoticeController {
      * 관련 내용 이슈 정리. 아래 링크 참고. https://github.com/wsh096/jpa-study/issues/3
      */
     @GetMapping(value = "/api/notice2")
-    public Notice noticeString2() {
+    public NoticeInput noticeString2() {
         return noticeService.notice();
     }
 
@@ -36,7 +37,7 @@ public class ApiNoticeController {
      * 게시판의 추상화한 모델, 복수형태 데이터 리턴. 2개 이상의 데이터 가져오기
      */
     @GetMapping(value = "/api/notice3")
-    public List<Notice> noticeList() {
+    public List<NoticeInput> noticeList() {
         return noticeService.noticeList();
     }
 
@@ -45,7 +46,7 @@ public class ApiNoticeController {
      * Null 반환 정확히는 빈배열의 반환 서비스 단에 관련한 차이 자세한 설명 있음.
      */
     @GetMapping(value = "/api/notice4")
-    public List<Notice> noticeList_Null() {
+    public List<NoticeInput> noticeList_Null() {
         return noticeService.noticeListNull();
     }
     //ex_10
@@ -67,7 +68,7 @@ public class ApiNoticeController {
      * @RequestParam 을 통해 넣어줄 값에 관한 구체적선언 가능.
      */
     @PostMapping(value = "/api/notice")
-    public Notice addNotice(@RequestParam String title, @RequestParam String description) {
+    public NoticeInput addNotice(@RequestParam String title, @RequestParam String description) {
         return noticeService.addNotice(title, description);
     }
 
@@ -79,8 +80,8 @@ public class ApiNoticeController {
      * 큰 차이는 없음
      */
     @PostMapping(value = "/api/notice2")
-    public Notice addNoticeAbstract(Notice notice){
-        return noticeService.addNoticeAbstract(notice);
+    public NoticeInput addNoticeAbstract(NoticeInput noticeInput){
+        return noticeService.addNoticeAbstract(noticeInput);
     }
 
     /**
@@ -89,7 +90,15 @@ public class ApiNoticeController {
      * 이러한 형태로 매핑해줘야 Json 형태로 값을 받을 수 있음
      */
     @PostMapping(value = "/api/notice3")
-    public Notice addNoticeShowJson(@RequestBody Notice notice){
-        return noticeService.addNoticeShowJson(notice);
+    public NoticeInput addNoticeShowJson(@RequestBody NoticeInput noticeInput){
+        return noticeService.addNoticeShowJson(noticeInput);
+    }
+    /**
+     * ex_14
+     * 실제 db에서 확인인 가능한 형태로 제작
+     */
+    @PostMapping(value = "/api/notice4")
+    public Notice addNoticeShowDB(@RequestBody NoticeInput noticeInput){
+        return noticeService.addNoticeShowDB(noticeInput);
     }
 }
