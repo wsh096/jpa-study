@@ -23,8 +23,15 @@ GET http://localhost:8080/api/notice4
 ### 게시글 개수 세기
 GET http://localhost:8080/api/count
 
-### 게시글 제목과 내용 더하기
+
+### 게시글 제목과 내용 더하기 ex_11
 POST http://localhost:8080/api/notice/
+Content-Type: application/x-www-form-urlencoded
+
+title=제목1&description=내용1
+
+### 게시글 입력 추상 형태 ex_12
+POST http://localhost:8080/api/notice2
 Content-Type: application/x-www-form-urlencoded
 
 title=제목1&description=내용1

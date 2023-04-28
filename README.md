@@ -248,7 +248,7 @@ public class NoticeService {
         return 10;
     }
 ```
-#### ex11- 을 위한 Controller (post) Service 추가, Config 추가.    
+#### ex11- 을 위한 Controller (post) Service 추가, Config 추가. 스크래치 파일.   
 ---
 
 `Config 설정`
@@ -283,6 +283,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public Notice addNotice(@RequestParam String title, @RequestParam String description) {
         return noticeService.addNotice(title, description);
     }
+    
+      /**
+     * ex_12
+     * 공지사항 모델을 추상화해서 가져온다는 것의 의미
+     * 11의 경우 이미 생성되어 있는 값을 수정하는 형태지만,
+     * 12번의 경우 비어 있는 것을 post 로 전달해줘서 셋팅하는 연습
+     * 큰 차이는 없음
+     */
+    @PostMapping(value = "/api/notice2")
+    public Notice addNoticeAbstract(Notice notice){
+        return noticeService.addNoticeAbstract(notice);
+    }
 ```
 `Service`
 ```agsl
@@ -294,4 +306,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .description(description)
             .regDate(LocalDateTime.of(2023, 4, 26, 0, 0)).build();
     }
+    
+//ex_12
+    public Notice addNoticeAbstract(Notice notice) {
+        notice.setId(3L);
+        notice.setRegDate(LocalDateTime.of(2023,04,12,12,12));
+    return notice;
+    }
+```
+`스크래치 파일`
+```agsl
+### 게시글 제목과 내용 더하기 ex_11
+POST http://localhost:8080/api/notice/
+Content-Type: application/x-www-form-urlencoded
+
+title=제목1&description=내용1
+
+### 게시글 입력 추상 형태 ex_12
+POST http://localhost:8080/api/notice2
+Content-Type: application/x-www-form-urlencoded
+
+title=제목1&description=내용1
 ```

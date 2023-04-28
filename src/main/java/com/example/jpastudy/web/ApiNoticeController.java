@@ -69,4 +69,16 @@ public class ApiNoticeController {
     public Notice addNotice(@RequestParam String title, @RequestParam String description) {
         return noticeService.addNotice(title, description);
     }
+
+    /**
+     * ex_12
+     * 공지사항 모델을 추상화해서 가져온다는 것의 의미
+     * 11의 경우 이미 생성되어 있는 값을 수정하는 형태지만,
+     * 12번의 경우 비어 있는 것을 post 로 전달해줘서 셋팅하는 연습
+     * 큰 차이는 없음
+     */
+    @PostMapping(value = "/api/notice2")
+    public Notice addNoticeAbstract(Notice notice){
+        return noticeService.addNoticeAbstract(notice);
+    }
 }

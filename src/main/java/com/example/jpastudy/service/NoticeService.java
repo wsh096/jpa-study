@@ -95,4 +95,10 @@ public class NoticeService {
             .description(description)
             .regDate(LocalDateTime.of(2023, 4, 26, 0, 0)).build();
     }
+
+    public Notice addNoticeAbstract(Notice notice) {
+        notice.setId(3L);
+        notice.setRegDate(LocalDateTime.of(2023,04,12,12,12));
+    return notice;
+    }
 }
