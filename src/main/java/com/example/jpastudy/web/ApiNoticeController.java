@@ -110,6 +110,10 @@ public class ApiNoticeController {
     public Notice addWatchLike(@RequestBody NoticeInput noticeInput){
         return noticeService.addWatchLike(noticeInput);
     }
+    /**
+     * ex_16
+     * 공지사항을 조회하는 기능 없으면 null 반환 실제에서는 예외를 넘기도록 해야함
+     */
     @GetMapping("/api/notice/{id}")
     public Notice showNotice(@PathVariable Long id){
         return noticeService.showNotice(id);

@@ -125,10 +125,10 @@ public class NoticeService {
             .description(noticeInput.getDescription()).watch(0L).likes(0L)
             .regDate(LocalDateTime.now()).build());
     }
-
+    //ex_16
     public Notice showNotice(Long id) {
         return noticeRepository.findById(id).orElse(null);
-        
+
         //return noticeRepository.findById(id).orElse(null);//좋은 방법은 아님.
         //isPresent가 더 적합한 예제가 맞음. 다만, 현재의 예시에서는 null의 반환을 가정할 수 있기에 위와 같이 작성.
         //null의 경우는 방어코드로 nullpointException 발생이 더 주요!

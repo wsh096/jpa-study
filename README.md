@@ -356,7 +356,7 @@ Content-Type: application/json
 }
 ```
 
-#### ex14- DB 연결, repository, .yml 설정(issue 확인)
+#### ex14-15 DB 연결, repository, .yml 설정(issue 확인)
 ---
 + `@component` 어노테이션 private final 로 선언한 값의 빈을 주입해주는 역할을 수행하는 것으로 확인. 
 + 하지만 해당 어노테이션의 접근은 적절한 방식이 아니기에, form이나 entity의 불변성 접근 불가의 원칙에 따라 사용하지 않음.
@@ -458,5 +458,34 @@ public interface NoticeRepository extends JpaRepository<Notice,Long> {
         return noticeRepository.save(Notice.builder().title(noticeInput.getTitle())
             .description(noticeInput.getDescription()).watch(0L).likes(0L)
             .regDate(LocalDateTime.now()).build());
+    }
+```
+
+#### ex16- , Controller, Service
+---
+
+`Controller`
+```agsl
+/**
+* ex_16
+* 공지사항을 조회하는 기능 없으면 null 반환 실제에서는 예외를 넘기도록 해야함
+* DB sql 문제 issue 에 정리 및 해결 (https://github.com/wsh096/jpa-study/issues/9)
+ */
+*/
+@GetMapping("/api/notice/{id}")
+public Notice showNotice(@PathVariable Long id){
+return noticeService.showNotice(id);
+}
+```
+
+`Service`
+```agsl
+//ex_16
+    public Notice showNotice(Long id) {
+        return noticeRepository.findById(id).orElse(null);
+        
+        //return noticeRepository.findById(id).orElse(null);//좋은 방법은 아님.
+        //isPresent가 더 적합한 예제가 맞음. 다만, 현재의 예시에서는 null의 반환을 가정할 수 있기에 위와 같이 작성.
+        //null의 경우는 방어코드로 nullpointException 발생이 더 주요!
     }
 ```
