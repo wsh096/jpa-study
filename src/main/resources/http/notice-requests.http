@@ -76,7 +76,16 @@ Content-Type: application/json
 }
 
 ### 에러를 다루어 보자 ex_18
-PUT http://localhost:8080/api/noticeError/10
+PUT http://localhost:8080/api/noticeError/2
+Content-Type: application/json
+
+{
+  "title" : "더 새로운 제목",
+  "description" : "더 새로운 내용"
+}
+
+### ex 19 날짜까지 변경
+PUT http://localhost:8080/api/noticeDate/1
 Content-Type: application/json
 
 {

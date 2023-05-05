@@ -156,6 +156,15 @@ public class NoticeService {
 
         notice.setTitle(noticeInput.getTitle());
         notice.setDescription(noticeInput.getDescription());
+        noticeRepository.save(notice);
+    }
+    //ex_19 하하, 18번에서 이미 다 했네 :) 날짜까지 수정하는게 19번의 예제!
+    public void updateNoticeDate(Long id, NoticeInput noticeInput) {
+        Notice notice = noticeRepository.findById(id)
+            .orElseThrow(()->new NoticeNotFoundException("찾고자 하는 공지사항의 글이 존재하지 않습니다."));
+
+        notice.setTitle(noticeInput.getTitle());
+        notice.setDescription(noticeInput.getDescription());
         notice.setUpdateDate(LocalDateTime.now());
         noticeRepository.save(notice);
     }

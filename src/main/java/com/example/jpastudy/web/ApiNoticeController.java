@@ -138,4 +138,12 @@ public class ApiNoticeController {
     public void updateNoticeError(@PathVariable Long id,@RequestBody NoticeInput noticeInput){
        noticeService.updateNoticeError(id,noticeInput);
     }
+    /**
+     * ex_19(그런데 이미 18에서 다 했음. 오류였던 것. 18은 제목과 내용만 바꾸는 것이었다!
+     * 날짜를 변경
+     */
+    @PutMapping("/api/noticeDate/{id}")
+    public void updateNoticeDate(@PathVariable Long id,@RequestBody NoticeInput noticeInput){
+        noticeService.updateNoticeDate(id,noticeInput);
+    }
 }

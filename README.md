@@ -497,6 +497,14 @@ public interface NoticeRepository extends JpaRepository<Notice,Long> {
     public void updateNoticeError(@PathVariable Long id,@RequestBody NoticeInput noticeInput){
        noticeService.updateNoticeError(id,noticeInput);
     }
+    /**
+     * ex_19(그런데 이미 18에서 다 했음. 오류였던 것. 18은 제목과 내용만 바꾸는 것이었다!
+     * 날짜를 변경
+     */
+    @PutMapping("/api/noticeDate/{id}")
+    public void updateNoticeDate(@PathVariable Long id,@RequestBody NoticeInput noticeInput){
+        noticeService.updateNoticeDate(id,noticeInput);
+    }
 ```
 
 `Service`
@@ -528,6 +536,16 @@ public interface NoticeRepository extends JpaRepository<Notice,Long> {
         Notice notice = noticeRepository.findById(id)
             .orElseThrow(()->new NoticeNotFoundException("찾고자 하는 공지사항의 글이 존재하지 않습니다."));
        
+        notice.setTitle(noticeInput.getTitle());
+        notice.setDescription(noticeInput.getDescription());
+        notice.setUpdateDate(LocalDateTime.now());
+        noticeRepository.save(notice);
+    }
+     //ex_19 하하, 18번에서 이미 다 했네 :) 날짜까지 수정하는게 19번의 예제!
+    public void updateNoticeDate(Long id, NoticeInput noticeInput) {
+        Notice notice = noticeRepository.findById(id)
+            .orElseThrow(()->new NoticeNotFoundException("찾고자 하는 공지사항의 글이 존재하지 않습니다."));
+
         notice.setTitle(noticeInput.getTitle());
         notice.setDescription(noticeInput.getDescription());
         notice.setUpdateDate(LocalDateTime.now());
