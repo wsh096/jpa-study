@@ -1,5 +1,6 @@
 package com.example.jpastudy.service;
 
+import com.example.jpastudy.exception.NoticeNotFoundException;
 import com.example.jpastudy.model.NoticeInput;
 import com.example.jpastudy.model.entity.Notice;
 import com.example.jpastudy.model.repository.NoticeRepository;
@@ -110,11 +111,12 @@ public class NoticeService {
     }
 
     private Notice getSaveNotice(NoticeInput noticeInput) {
-        return noticeRepository.save( Notice.builder().title(noticeInput.getTitle())
+        return noticeRepository.save(Notice.builder().title(noticeInput.getTitle())
             .description(noticeInput.getDescription())
             .regDate(LocalDateTime.now()).build());
 
     }
+
     //ex_15
     public Notice addWatchLike(NoticeInput noticeInput) {
         return getSaveNoticeWatchLike(noticeInput);
@@ -125,6 +127,7 @@ public class NoticeService {
             .description(noticeInput.getDescription()).watch(0L).likes(0L)
             .regDate(LocalDateTime.now()).build());
     }
+
     //ex_16
     public Notice showNotice(Long id) {
         return noticeRepository.findById(id).orElse(null);
@@ -133,10 +136,11 @@ public class NoticeService {
         //isPresent가 더 적합한 예제가 맞음. 다만, 현재의 예시에서는 null의 반환을 가정할 수 있기에 위와 같이 작성.
         //null의 경우는 방어코드로 nullpointException 발생이 더 주요!
     }
+
     //ex_17
     public Notice updateNotice(Long id, NoticeInput noticeInput) {
         Optional<Notice> notice = noticeRepository.findById(id);
-        if(notice.isPresent()){
+        if (notice.isPresent()) {
             notice.get().setTitle(noticeInput.getTitle());
             notice.get().setDescription(noticeInput.getDescription());
             notice.get().setUpdateDate(LocalDateTime.now());
@@ -144,6 +148,16 @@ public class NoticeService {
             return notice.get();
         }
         return null;
-        }
     }
+    //ex_18
+    public void updateNoticeError(Long id, NoticeInput noticeInput) {
+        Notice notice = noticeRepository.findById(id)
+            .orElseThrow(()->new NoticeNotFoundException("찾고자 하는 공지사항의 글이 존재하지 않습니다."));
+
+        notice.setTitle(noticeInput.getTitle());
+        notice.setDescription(noticeInput.getDescription());
+        notice.setUpdateDate(LocalDateTime.now());
+        noticeRepository.save(notice);
+    }
+}
 

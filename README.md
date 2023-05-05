@@ -486,18 +486,30 @@ public interface NoticeRepository extends JpaRepository<Notice,Long> {
     public void updateNotice(@PathVariable Long id,@RequestBody NoticeInput noticeInput){
         noticeService.updateNotice(id,noticeInput);
     }
+    /**
+     * ex_18
+     * 17 + 예외 반환!
+     * 10번 이슈의 닫는 내용으로 해당 내용 추가. 강의와 다른 점. 강의는 
+     * 여기에 해당 ExceptionHandler 메서드를 추가해 사용했다.
+     * 하지만, 나는 별도의 클래스로 보냈고, 이렇게 하면, @RestControllerAdvice로 해당 설정을 전역으로 만들었다.
+     */
+    @PutMapping("/api/noticeError/{id}")
+    public void updateNoticeError(@PathVariable Long id,@RequestBody NoticeInput noticeInput){
+       noticeService.updateNoticeError(id,noticeInput);
+    }
 ```
 
 `Service`
 ```agsl
-//ex_16
-    public Notice showNotice(Long id) {
-        return noticeRepository.findById(id).orElse(null);
-        
-        //return noticeRepository.findById(id).orElse(null);//좋은 방법은 아님.
-        //isPresent가 더 적합한 예제가 맞음. 다만, 현재의 예시에서는 null의 반환을 가정할 수 있기에 위와 같이 작성.
-        //null의 경우는 방어코드로 nullpointException 발생이 더 주요!
-    }
+    //ex_16
+        public Notice showNotice(Long id) {
+            return noticeRepository.findById(id).orElse(null);
+            
+            //return noticeRepository.findById(id).orElse(null);//좋은 방법은 아님.
+            //isPresent가 더 적합한 예제가 맞음. 다만, 현재의 예시에서는 null의 반환을 가정할 수 있기에 위와 같이 작성.
+            //null의 경우는 방어코드로 nullpointException 발생이 더 주요!
+        }
+    
        //ex_17
     public void updateNotice(Long id, NoticeInput noticeInput) {
         Optional<Notice> notice = noticeRepository.findById(id);
@@ -509,5 +521,16 @@ public interface NoticeRepository extends JpaRepository<Notice,Long> {
         }else{
             System.out.println("찾고자 하는 id가 없습니다. 비정상적인 접근입니다.");
         }
+    }
+    
+    //ex_18
+    public void updateNoticeError(Long id, NoticeInput noticeInput) {
+        Notice notice = noticeRepository.findById(id)
+            .orElseThrow(()->new NoticeNotFoundException("찾고자 하는 공지사항의 글이 존재하지 않습니다."));
+       
+        notice.setTitle(noticeInput.getTitle());
+        notice.setDescription(noticeInput.getDescription());
+        notice.setUpdateDate(LocalDateTime.now());
+        noticeRepository.save(notice);
     }
 ```

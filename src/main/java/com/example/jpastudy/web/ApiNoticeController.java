@@ -127,4 +127,15 @@ public class ApiNoticeController {
     public Notice updateNotice(@PathVariable Long id,@RequestBody NoticeInput noticeInput){
         return noticeService.updateNotice(id,noticeInput);
     }
+    /**
+     * ex_18
+     * 17 + 예외 반환!
+     * 10번 이슈의 닫는 내용으로 해당 내용 추가. 강의와 다른 점. 강의는
+     * 여기에 해당 ExceptionHandler 메서드를 추가해 사용했다.
+     * 하지만, 나는 별도의 클래스로 보냈고, 이렇게 하면, @RestControllerAdvice로 해당 설정을 전역으로 만들었다.
+     */
+    @PutMapping("/api/noticeError/{id}")
+    public void updateNoticeError(@PathVariable Long id,@RequestBody NoticeInput noticeInput){
+       noticeService.updateNoticeError(id,noticeInput);
+    }
 }

@@ -74,3 +74,12 @@ Content-Type: application/json
   "title" : "더 새로운 제목",
   "description" : "더 새로운 내용"
 }
+
+### 에러를 다루어 보자 ex_18
+PUT http://localhost:8080/api/noticeError/10
+Content-Type: application/json
+
+{
+  "title" : "더 새로운 제목",
+  "description" : "더 새로운 내용"
+}
