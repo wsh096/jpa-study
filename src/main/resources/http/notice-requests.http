@@ -92,3 +92,6 @@ Content-Type: application/json
   "title" : "더 새로운 제목",
   "description" : "더 새로운 내용"
 }
+
+### ex 20 조회수 수정을 위한 Patch 활용
+PATCH http://localhost:8080/api/noticePatch/1

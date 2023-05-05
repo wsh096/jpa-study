@@ -6,6 +6,7 @@ import com.example.jpastudy.service.NoticeService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -145,5 +146,14 @@ public class ApiNoticeController {
     @PutMapping("/api/noticeDate/{id}")
     public void updateNoticeDate(@PathVariable Long id,@RequestBody NoticeInput noticeInput){
         noticeService.updateNoticeDate(id,noticeInput);
+    }
+
+    /**
+     * ex_20 PATCH를 통한 부분적인 수정.
+     * 조회수를 변경.
+     */
+    @PatchMapping("/api/noticePatch/{id}")
+    public void NoticeWatch(@PathVariable Long id){
+        noticeService.NoticeWatch(id);
     }
 }

@@ -461,7 +461,7 @@ public interface NoticeRepository extends JpaRepository<Notice,Long> {
     }
 ```
 
-#### ex16- , Controller, Service
+#### ex16-20 ,주요 issue 10번, 새로운 지식 PATCH를 활용한 부분 수정 ,Controller, Service
 ---
 
 `Controller`
@@ -504,6 +504,14 @@ public interface NoticeRepository extends JpaRepository<Notice,Long> {
     @PutMapping("/api/noticeDate/{id}")
     public void updateNoticeDate(@PathVariable Long id,@RequestBody NoticeInput noticeInput){
         noticeService.updateNoticeDate(id,noticeInput);
+    }
+    /**
+     * ex_20 PATCH를 통한 부분적인 수정.
+     * 조회수를 변경.
+     */
+    @PatchMapping("/api/noticePatch/{id}")
+    public void NoticeWatch(@PathVariable Long id){
+        noticeService.NoticeWatch(id);
     }
 ```
 
@@ -549,6 +557,13 @@ public interface NoticeRepository extends JpaRepository<Notice,Long> {
         notice.setTitle(noticeInput.getTitle());
         notice.setDescription(noticeInput.getDescription());
         notice.setUpdateDate(LocalDateTime.now());
+        noticeRepository.save(notice);
+    }
+     //ex_20
+    public void NoticeWatch(Long id) {
+        Notice notice = noticeRepository.findById(id)
+            .orElseThrow(() -> new NoticeNotFoundException("찾고자 하는 공지사항의 글이 존재하지 않습니다."));
+        notice.setWatch(notice.getWatch() + 1);
         noticeRepository.save(notice);
     }
 ```
