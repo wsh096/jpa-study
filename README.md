@@ -466,16 +466,26 @@ public interface NoticeRepository extends JpaRepository<Notice,Long> {
 
 `Controller`
 ```agsl
-/**
-* ex_16
-* 공지사항을 조회하는 기능 없으면 null 반환 실제에서는 예외를 넘기도록 해야함
-* DB sql 문제 issue 에 정리 및 해결 (https://github.com/wsh096/jpa-study/issues/9)
- */
-*/
-@GetMapping("/api/notice/{id}")
-public Notice showNotice(@PathVariable Long id){
-return noticeService.showNotice(id);
-}
+    /**
+    * ex_16
+    * 공지사항을 조회하는 기능 없으면 null 반환 실제에서는 예외를 넘기도록 해야함
+    * DB sql 문제 issue 에 정리 및 해결 (https://github.com/wsh096/jpa-study/issues/9)
+     */
+    */
+    @GetMapping("/api/notice/{id}")
+    public Notice showNotice(@PathVariable Long id){
+    return noticeService.showNotice(id);
+    }
+
+    /**
+     * ex_17
+     * 공지사항을 업데이트, DB update_date 추가, @RequestBody 로 값 받기.
+     * 추가 학습 내용 이슈 10에 정리(https://github.com/wsh096/jpa-study/issues/10)
+     */
+    @PutMapping("/api/notice/{id}")
+    public void updateNotice(@PathVariable Long id,@RequestBody NoticeInput noticeInput){
+        noticeService.updateNotice(id,noticeInput);
+    }
 ```
 
 `Service`
@@ -487,5 +497,17 @@ return noticeService.showNotice(id);
         //return noticeRepository.findById(id).orElse(null);//좋은 방법은 아님.
         //isPresent가 더 적합한 예제가 맞음. 다만, 현재의 예시에서는 null의 반환을 가정할 수 있기에 위와 같이 작성.
         //null의 경우는 방어코드로 nullpointException 발생이 더 주요!
+    }
+       //ex_17
+    public void updateNotice(Long id, NoticeInput noticeInput) {
+        Optional<Notice> notice = noticeRepository.findById(id);
+        if(notice.isPresent()){
+            notice.get().setTitle(noticeInput.getTitle());
+            notice.get().setDescription(noticeInput.getDescription());
+            notice.get().setUpdateDate(LocalDateTime.now());
+            noticeRepository.save(notice.get());
+        }else{
+            System.out.println("찾고자 하는 id가 없습니다. 비정상적인 접근입니다.");
+        }
     }
 ```

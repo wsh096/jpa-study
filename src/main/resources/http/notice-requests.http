@@ -65,3 +65,12 @@ Content-Type: application/json
 
 ### notice가 존재하면 헤당 id를 없으면 null을 반환 ex_16
 GET http://localhost:8080/api/notice/5
+
+### 업데이트 ex_17
+PUT http://localhost:8080/api/notice/5
+Content-Type: application/json
+
+{
+  "title" : "더 새로운 제목",
+  "description" : "더 새로운 내용"
+}

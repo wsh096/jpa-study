@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -117,5 +118,13 @@ public class ApiNoticeController {
     @GetMapping("/api/notice/{id}")
     public Notice showNotice(@PathVariable Long id){
         return noticeService.showNotice(id);
+    }
+    /**
+     * ex_17
+     * 공지사항을 업데이트, DB update_date 추가, @RequestBody 로 값 받기.
+     */
+    @PutMapping("/api/notice/{id}")
+    public Notice updateNotice(@PathVariable Long id,@RequestBody NoticeInput noticeInput){
+        return noticeService.updateNotice(id,noticeInput);
     }
 }

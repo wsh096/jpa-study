@@ -133,4 +133,17 @@ public class NoticeService {
         //isPresent가 더 적합한 예제가 맞음. 다만, 현재의 예시에서는 null의 반환을 가정할 수 있기에 위와 같이 작성.
         //null의 경우는 방어코드로 nullpointException 발생이 더 주요!
     }
-}
+    //ex_17
+    public Notice updateNotice(Long id, NoticeInput noticeInput) {
+        Optional<Notice> notice = noticeRepository.findById(id);
+        if(notice.isPresent()){
+            notice.get().setTitle(noticeInput.getTitle());
+            notice.get().setDescription(noticeInput.getDescription());
+            notice.get().setUpdateDate(LocalDateTime.now());
+            noticeRepository.save(notice.get());
+            return notice.get();
+        }
+        return null;
+        }
+    }
+
