@@ -567,3 +567,25 @@ public interface NoticeRepository extends JpaRepository<Notice,Long> {
         noticeRepository.save(notice);
     }
 ```
+#### ex21- ,DeleteMapping
+---
+
+`Controller`
+```agsl
+/**
+* ex_21 DeleteMapping 통한 삭제 구현.
+*/
+@DeleteMapping("/api/noticeDelete/{id}")
+public void deleteNotice(@PathVariable Long id){
+noticeService.NoticeDelete(id);
+}
+```
+
+`Service`
+```agsl
+ //ex_21
+    public void NoticeDelete(Long id) {
+        noticeRepository.delete(noticeRepository.findById(id)
+            .orElseThrow(() -> new NoticeNotFoundException("삭제하고자 하는 글이 없습니다.")));
+    }
+```

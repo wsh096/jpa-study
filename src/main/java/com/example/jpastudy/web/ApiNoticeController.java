@@ -5,6 +5,7 @@ import com.example.jpastudy.model.entity.Notice;
 import com.example.jpastudy.service.NoticeService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -155,5 +156,12 @@ public class ApiNoticeController {
     @PatchMapping("/api/noticePatch/{id}")
     public void NoticeWatch(@PathVariable Long id){
         noticeService.NoticeWatch(id);
+    }
+    /**
+     * ex_21 DeleteMapping 통한 삭제 구현.
+     */
+    @DeleteMapping("/api/noticeDelete/{id}")
+    public void deleteNotice(@PathVariable Long id){
+        noticeService.NoticeDelete(id);
     }
 }

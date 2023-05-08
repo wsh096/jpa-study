@@ -170,12 +170,18 @@ public class NoticeService {
         notice.setUpdateDate(LocalDateTime.now());
         noticeRepository.save(notice);
     }
+
     //ex_20
     public void NoticeWatch(Long id) {
         Notice notice = noticeRepository.findById(id)
             .orElseThrow(() -> new NoticeNotFoundException("찾고자 하는 공지사항의 글이 존재하지 않습니다."));
         notice.setWatch(notice.getWatch() + 1);
         noticeRepository.save(notice);
+    }
+    //ex_21
+    public void NoticeDelete(Long id) {
+        noticeRepository.delete(noticeRepository.findById(id)
+            .orElseThrow(() -> new NoticeNotFoundException("삭제하고자 하는 글이 없습니다.")));
     }
 }
 
