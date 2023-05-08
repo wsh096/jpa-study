@@ -158,10 +158,17 @@ public class ApiNoticeController {
         noticeService.NoticeWatch(id);
     }
     /**
-     * ex_21 DeleteMapping 통한 삭제 구현.
+     * ex_21 DeleteMapping 통한 삭제만 구현.
      */
     @DeleteMapping("/api/noticeDelete/{id}")
     public void deleteNotice(@PathVariable Long id){
         noticeService.NoticeDelete(id);
+    }
+    /**
+     * ex_22 DeleteMapping 통한 삭제와 예외 처리.
+     */
+    @DeleteMapping("/api/noticeDeleteThrow/{id}")
+    public void deleteNoticeThrow(@PathVariable Long id){
+        noticeService.NoticeDeleteThrow(id);
     }
 }

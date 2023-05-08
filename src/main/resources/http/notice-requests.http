@@ -96,5 +96,8 @@ Content-Type: application/json
 ### ex 20 조회수 수정을 위한 Patch 활용
 PATCH http://localhost:8080/api/noticePatch/1
 
-### ex_21 DeleteMapping 통한 삭제 구현.
-DELETE http://localhost:8080/api/noticeDelete/2
+### ex_21 DeleteMapping 통한 삭제만 구현.
+DELETE http://localhost:8080/api/noticeDelete/3
+
+### ex_22 DeleteMapping 통한 삭제와 예외 구현.
+DELETE http://localhost:8080/api/noticeDeleteThrow/1
