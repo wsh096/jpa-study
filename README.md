@@ -567,7 +567,7 @@ public interface NoticeRepository extends JpaRepository<Notice,Long> {
         noticeRepository.save(notice);
     }
 ```
-#### ex21- ,DeleteMapping
+#### ex21- 23,DeleteMapping 23번 수정 상세 및 에러 관련 이슈 11 참고
 ---
 
 `Controller`
@@ -586,6 +586,12 @@ public interface NoticeRepository extends JpaRepository<Notice,Long> {
     public void deleteNoticeThrow(@PathVariable Long id){
         noticeService.NoticeDeleteThrow(id);
     }
+     /**
+     * ex_23 DeleteMapping flag_DATETIME
+     */
+    @DeleteMapping("/api/noticeDeleteFlag/{id}")
+    public void deleteNoticeFlag(@PathVariable Long id) {
+        noticeService.NoticeDeleteFlag(id);
 ```
 
 `Service`
@@ -601,6 +607,18 @@ public interface NoticeRepository extends JpaRepository<Notice,Long> {
     public void NoticeDeleteThrow(Long id) {
         noticeRepository.delete(noticeRepository.findById(id)
             .orElseThrow(() -> new NoticeNotFoundException("삭제하고자 하는 글이 없습니다.")));
+    }
+        //ex_23
+    public void NoticeDeleteFlag(Long id) {
+        int i = 0;
+        Notice notice = noticeRepository.findById(id)
+            .orElseThrow(() -> new NoticeNotFoundException("삭제하고자 하는 글이 없습니다."));
+            if (notice.isDeleted()) {
+                throw new AlreadyDeletedException("이미 삭제된 글입니다.");
+            }
+        notice.setDeleted(true);
+        notice.setDeletedDate(LocalDateTime.now());
+        noticeRepository.save(notice);
     }
 }
 ```

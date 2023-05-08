@@ -1,5 +1,6 @@
 package com.example.jpastudy.service;
 
+import com.example.jpastudy.exception.AlreadyDeletedException;
 import com.example.jpastudy.exception.NoticeNotFoundException;
 import com.example.jpastudy.model.NoticeInput;
 import com.example.jpastudy.model.entity.Notice;
@@ -178,17 +179,31 @@ public class NoticeService {
         notice.setWatch(notice.getWatch() + 1);
         noticeRepository.save(notice);
     }
+
     //ex_21
     public void NoticeDelete(Long id) {
         Optional<Notice> notice = noticeRepository.findById(id);
-       if(notice.isPresent()){
-           noticeRepository.delete(notice.get());
-       }
+        if (notice.isPresent()) {
+            noticeRepository.delete(notice.get());
+        }
     }
+
     //ex_22
     public void NoticeDeleteThrow(Long id) {
         noticeRepository.delete(noticeRepository.findById(id)
             .orElseThrow(() -> new NoticeNotFoundException("삭제하고자 하는 글이 없습니다.")));
+    }
+    //ex_23
+    public void NoticeDeleteFlag(Long id) {
+        int i = 0;
+        Notice notice = noticeRepository.findById(id)
+            .orElseThrow(() -> new NoticeNotFoundException("삭제하고자 하는 글이 없습니다."));
+            if (notice.isDeleted()) {
+                throw new AlreadyDeletedException("이미 삭제된 글입니다.");
+            }
+        notice.setDeleted(true);
+        notice.setDeletedDate(LocalDateTime.now());
+        noticeRepository.save(notice);
     }
 }
 

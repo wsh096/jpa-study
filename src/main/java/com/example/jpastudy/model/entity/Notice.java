@@ -30,10 +30,11 @@ public class Notice {
     private String description;
     private LocalDateTime regDate;
     private LocalDateTime updateDate;
-
     private long watch;
     //like 는 H2의 예약어기 때문에 생성이 안됨!
-
     private long likes;
+    private boolean deleted;
+    private LocalDateTime deletedDate;
+
 
 }

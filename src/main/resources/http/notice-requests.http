@@ -101,3 +101,6 @@ DELETE http://localhost:8080/api/noticeDelete/3
 
 ### ex_22 DeleteMapping 통한 삭제와 예외 구현.
 DELETE http://localhost:8080/api/noticeDeleteThrow/1
+
+### ex_23 DeleteMapping 통한 삭제 Flag 예외 구현.
+DELETE http://localhost:8080/api/noticeDeleteFlag/5
