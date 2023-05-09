@@ -1,6 +1,7 @@
 package com.example.jpastudy.web;
 
 import com.example.jpastudy.exception.AlreadyDeletedException;
+import com.example.jpastudy.model.NoticeDeleteInput;
 import com.example.jpastudy.model.NoticeInput;
 import com.example.jpastudy.model.entity.Notice;
 import com.example.jpastudy.service.NoticeService;
@@ -178,5 +179,13 @@ public class ApiNoticeController {
     @DeleteMapping("/api/noticeDeleteFlag/{id}")
     public void deleteNoticeFlag(@PathVariable Long id) {
         noticeService.NoticeDeleteFlag(id);
+    }
+
+    /**
+     * ex_24 DeleteMapping IdListDelete
+     */
+    @DeleteMapping("/api/noticeDeleteList")
+    public void deleteNoticeList(@RequestBody NoticeDeleteInput noticeDeleteInput) {
+        noticeService.NoticeDeleteList(noticeDeleteInput);
     }
 }

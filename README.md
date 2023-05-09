@@ -567,7 +567,7 @@ public interface NoticeRepository extends JpaRepository<Notice,Long> {
         noticeRepository.save(notice);
     }
 ```
-#### ex21- 23,DeleteMapping 23번 수정 상세 및 에러 관련 이슈 11 참고
+#### ex21- 23,DeleteMapping 23번 수정 상세 및 에러 관련 이슈 11 참고 https://github.com/wsh096/jpa-study/issues/11
 ---
 
 `Controller`
@@ -621,4 +621,34 @@ public interface NoticeRepository extends JpaRepository<Notice,Long> {
         noticeRepository.save(notice);
     }
 }
+```
+#### ex24- ,DeleteMapping idList(ex24 상세 https://github.com/wsh096/jpa-study/issues/12)
+---
+
+`Controller`
+```agsl
+/**
+     * ex_24 DeleteMapping IdListDelete
+     */
+    @DeleteMapping("/api/noticeDeleteListc /{id}")
+    public void deleteNoticeList(@RequestBody NoticeDeleteInput noticeDeleteInput) {
+        noticeService.NoticeDeleteList(noticeDeleteInput);
+    }
+```
+
+`Service`
+```agsl
+ //ex_24
+    public void NoticeDeleteList(NoticeDeleteInput noticeDeleteInput) {
+        List<Notice> noticeList  = noticeRepository.findByIdIn(noticeDeleteInput.getIdList())
+            .orElseThrow(() -> new NoticeNotFoundException("해당 리스트는 없습니다."));
+        noticeList.stream()
+            .forEach(e ->{
+                e.setDeleted(true);
+                e.setDeletedDate(LocalDateTime.now());
+                }
+            );
+        noticeRepository.saveAll(noticeList);
+    }
+ 
 ```

@@ -104,3 +104,11 @@ DELETE http://localhost:8080/api/noticeDeleteThrow/1
 
 ### ex_23 DeleteMapping 통한 삭제 Flag 예외 구현.
 DELETE http://localhost:8080/api/noticeDeleteFlag/5
+
+### ex_24 DeleteMapping 통한 삭제 idList로 통합 삭제 배열은 [1,2,3]이구나!
+DELETE http://localhost:8080/api/noticeDeleteList
+Content-Type: application/json
+
+{
+  "idList": [1,2,3]
+}
