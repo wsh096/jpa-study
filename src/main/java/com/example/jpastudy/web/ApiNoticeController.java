@@ -188,4 +188,12 @@ public class ApiNoticeController {
     public void deleteNoticeList(@RequestBody NoticeDeleteInput noticeDeleteInput) {
         noticeService.NoticeDeleteList(noticeDeleteInput);
     }
+
+    /**
+     * ex_25 DeleteMapping deleteAll
+     */
+    @DeleteMapping("/api/noticeDeleteAll")
+    public void deleteAll() {
+        noticeService.NoticeDeleteAll();
+    }
 }

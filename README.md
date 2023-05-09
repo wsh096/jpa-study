@@ -634,6 +634,13 @@ public interface NoticeRepository extends JpaRepository<Notice,Long> {
     public void deleteNoticeList(@RequestBody NoticeDeleteInput noticeDeleteInput) {
         noticeService.NoticeDeleteList(noticeDeleteInput);
     }
+    /**
+     * ex_25 DeleteMapping deleteAll
+     */
+    @DeleteMapping("/api/noticeDeleteAll")
+    public void deleteAll() {
+        noticeService.NoticeDeleteAll();
+    }
 ```
 
 `Service`
@@ -650,5 +657,8 @@ public interface NoticeRepository extends JpaRepository<Notice,Long> {
             );
         noticeRepository.saveAll(noticeList);
     }
- 
+   //ex_25
+    public void NoticeDeleteAll() {
+        noticeRepository.deleteAll();
+    }
 ```

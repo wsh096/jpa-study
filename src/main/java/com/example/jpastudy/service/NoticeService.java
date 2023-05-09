@@ -219,5 +219,10 @@ public class NoticeService {
             );
         noticeRepository.saveAll(noticeList);
     }
+    //ex_25
+    public void NoticeDeleteAll() {
+        noticeRepository.deleteAll();
+    }
+
 }
 
